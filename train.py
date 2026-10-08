@@ -2,21 +2,21 @@
 import joblib
 
 from sklearn.datasets import fetch_20newsgroups
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score, classification_report
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import make_pipeline
 
 print("Loading 20 Newsgroups dataset...")
 
 train = fetch_20newsgroups(
-    subset='train',
-    remove=('headers', 'footers', 'quotes')
+    subset="train",
+    remove=("headers", "footers", "quotes")
 )
 
 test = fetch_20newsgroups(
-    subset='test',
-    remove=('headers', 'footers', 'quotes')
+    subset="test",
+    remove=("headers", "footers", "quotes")
 )
 
 print("Building the Multinomial Naive Bayes model pipeline...")
@@ -42,12 +42,16 @@ print(
     classification_report(
         test.target,
         predicted,
-        target_names=test.target_names
+        target_names=train.target_names
     )
 )
 
 model_filename = "20newsgroups_model.joblib"
 
-joblib.dump(model, model_filename)
+joblib.dump(
+    model,
+    model_filename,
+    compress=3
+)
 
 print(f"Model saved successfully as {model_filename}")
